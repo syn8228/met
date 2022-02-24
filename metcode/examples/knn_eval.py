@@ -4,11 +4,9 @@ import pickle
 import json
 import argparse
 import datetime
-import sys
-sys.path.append('/cluster/yinan/met/')
 
-from metcode.utils.utils import *
-from metcode.classifiers.knn_classifier import *
+from code.utils.utils import *
+from code.classifiers.knn_classifier import *
 
 
 

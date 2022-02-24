@@ -12,11 +12,11 @@ from torch.utils.model_zoo import load_url
 import sys
 sys.path.append('/cluster/yinan/met/')
 
-from metcode.utils.datasets import *
-from metcode.utils.utils import *
-from metcode.networks.backbone import *
-from metcode.networks.SiameseNet import *
-from metcode.utils.augmentations import augmentation
+from code.utils.datasets import *
+from code.utils.utils import *
+from code.networks.backbone import *
+from code.networks.SiameseNet import *
+from code.utils.augmentations import augmentation
 
 
 '''Script for the extraction of descriptors for the Met dataset given a (pretrained) backbone.
@@ -26,7 +26,7 @@ from metcode.utils.augmentations import augmentation
 def main():
 
 	parser = argparse.ArgumentParser()
-	parser.add_argument('--directory', metavar='EXPORT_DIR',help='destination where descriptors will be saved')
+	parser.add_argument('directory', metavar='EXPORT_DIR',help='destination where descriptors will be saved')
 	parser.add_argument('--gpuid', default=0, type=int) #id of the gpu in your machine
 	parser.add_argument('--net', default='r18INgem')
 	parser.add_argument('--netpath', default=None) #optional
@@ -38,6 +38,7 @@ def main():
 	parser.add_argument('--im_root',default=None, type=str, help = 'directory where images are stored')
 	
 	args = parser.parse_args()
+	print("args=", args)
 
 	os.environ['CUDA_VISIBLE_DEVICES'] = str(args.gpuid)
 
@@ -131,7 +132,8 @@ def main():
 
 		elif network_variant == 'r50_swav_gem':
 			model = torch.hub.load('facebookresearch/swav','resnet50')
-			net = torch.nn.Sequential(*list(model.children())[:-2],GeM(),L2N())
+			head_net = torch.nn.Sequential(*list(model.children())[:-2])
+			net = torch.nn.Sequential(head_net, GeM(), L2N())
 			net.meta = {
 				'architecture' : "resnet50", 
 				'pooling' : "gem",
@@ -147,7 +149,8 @@ def main():
 			model = torch.nn.DataParallel(model)
 			model.load_state_dict(checkpoint['state_dict'])
 			model = model.module
-			net = torch.nn.Sequential(*list(model.children())[:-2],GeM(),L2N())
+			head_net = torch.nn.Sequential(*list(model.children())[:-2])
+			net = torch.nn.Sequential(head_net, GeM(), L2N())
 			net.meta = {
 				'architecture' : "resnet50", 
 				'pooling' : "gem",
@@ -158,7 +161,8 @@ def main():
 		
 		elif network_variant == 'r18_sw-sup_gem':
 			model = torch.hub.load('facebookresearch/semi-supervised-ImageNet1K-models', 'resnet18_swsl')
-			net = torch.nn.Sequential(*list(model.children())[:-2],GeM(),L2N())
+			head_net = torch.nn.Sequential(*list(model.children())[:-2])
+			net = torch.nn.Sequential(head_net, GeM(), L2N())
 			net.meta = {
 				'architecture' : "resnet18", 
 				'pooling' : "gem",
@@ -169,7 +173,8 @@ def main():
 
 		elif network_variant == 'r50_sw-sup_gem':
 			model = torch.hub.load('facebookresearch/semi-supervised-ImageNet1K-models', 'resnet50_swsl')
-			net = torch.nn.Sequential(*list(model.children())[:-2],GeM(),L2N())
+			head_net = torch.nn.Sequential(*list(model.children())[:-2])
+			net = torch.nn.Sequential(head_net,GeM(),L2N())
 			net.meta = {
 				'architecture' : "resnet50", 
 				'pooling' : "gem",
