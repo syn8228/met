@@ -4,13 +4,15 @@ import sys
 import pickle
 import math
 import numpy as np
+import sys
+sys.path.append('/cluster/yinan/met/')
 
-from code.utils.train_utils import *
-from code.networks.SiameseNet import *
-from code.utils.datasets import *
-from code.utils.utils import *
-from code.utils.losses import *
-from code.utils.augmentations import augmentation
+from metcode.utils.train_utils import *
+from metcode.networks.SiameseNet import *
+from metcode.utils.datasets import *
+from metcode.utils.utils import *
+from metcode.utils.losses import *
+from metcode.utils.augmentations import augmentation
 
 
 import torch
