@@ -26,7 +26,7 @@ from metcode.utils.augmentations import augmentation
 def main():
 
 	parser = argparse.ArgumentParser()
-	parser.add_argument('--directory', metavar='EXPORT_DIR',help='destination where descriptors will be saved')
+	parser.add_argument('directory', metavar='EXPORT_DIR',help='destination where descriptors will be saved')
 	parser.add_argument('--gpuid', default=0, type=int) #id of the gpu in your machine
 	parser.add_argument('--net', default='r18INgem')
 	parser.add_argument('--netpath', default=None) #optional
