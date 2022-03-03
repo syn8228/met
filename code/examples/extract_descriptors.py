@@ -206,12 +206,12 @@ def main():
 	print("Starting the extraction of the descriptors")
 	
 	if not args.queries_only:
-		train_descr = extract_embeddings(net,train_loader,ms = scales,msp = 1.0,print_freq=20000)
+		train_descr = extract_embeddings(net,train_loader,ms = scales,msp = 1.0,print_freq=20000,model=network_variant)
 		print("Train descriptors finished...")
 	
-	test_descr = extract_embeddings(net,test_loader,ms = scales,msp = 1.0,print_freq=5000)
+	test_descr = extract_embeddings(net,test_loader,ms = scales,msp = 1.0,print_freq=5000,model=network_variant)
 	print("Test descriptors finished...")
-	val_descr = extract_embeddings(net,val_loader,ms = scales,msp = 1.0,print_freq=1000)
+	val_descr = extract_embeddings(net,val_loader,ms = scales,msp = 1.0,print_freq=1000,model=network_variant)
 	print("Val descriptors finished...")
 
 	descriptors_dict = {}
