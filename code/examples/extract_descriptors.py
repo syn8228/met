@@ -113,6 +113,12 @@ def main():
 			print("loading weights from checkpoint")
 			model.load_state_dict(torch.load(args.netpath)['state_dict'])
 			net = model.backbone
+
+		elif network_variant == 'vgg_fc7' or 'resnet_custom':
+			model = TripletSiameseNetwork_custom(network_variant)
+			print("loading weights from checkpoint")
+			model.load_state_dict(args.netpath)
+			net = model.head
 			
 		else:
 			raise ValueError('Unsupported  architecture: {}!'.format(network_variant))
@@ -177,6 +183,10 @@ def main():
 				'std' : [0.229, 0.224, 0.225],
 				'outputdim' : 2048,
 			}
+
+		elif network_variant == 'vgg_fc7' or 'resnet_custom':
+			model = TripletSiameseNetwork_custom(network_variant)
+			net = model.head
 
 		else:
 			raise ValueError('Unsupported  architecture: {}!'.format(network_variant))
