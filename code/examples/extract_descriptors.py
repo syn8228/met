@@ -117,7 +117,8 @@ def main():
 		elif network_variant == 'vgg_fc7' or 'resnet_custom':
 			model = TripletSiameseNetwork_custom(network_variant)
 			print("loading weights from checkpoint")
-			model.load_state_dict(args.netpath)
+			state_dict = torch.load(args.netpath)
+			model.load_state_dict(state_dict)
 			net = model.head
 			
 		else:
