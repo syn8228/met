@@ -131,7 +131,7 @@ def estimate_pca_whiten_with_shrinkage(X, shrinkage=1.0, dimensions=None):
 
 
 
-def extract_embeddings(net,dataloader,ms=[1],msp=1,print_freq=None,verbose = False):
+def extract_embeddings(net,dataloader,ms=[1],msp=1,print_freq=None,verbose = False, model=None):
     '''Credits to Filip Radenovic (https://github.com/filipradenovic/cnnimageretrieval-pytorch)
     '''
 
@@ -145,8 +145,12 @@ def extract_embeddings(net,dataloader,ms=[1],msp=1,print_freq=None,verbose = Fal
     net.eval()
     
     with torch.no_grad():
-
-        vecs = np.zeros((net.meta['outputdim'], len(dataloader.dataset)))
+        if model == 'vgg_fc7':
+            vecs = np.zeros((4096, len(dataloader.dataset)))
+        elif model == 'resnet50':
+            vecs = np.zeros((1000, len(dataloader.dataset)))
+        else:
+            vecs = np.zeros((net.meta['outputdim'], len(dataloader.dataset)))
     
         for i,input in enumerate(dataloader):
 
