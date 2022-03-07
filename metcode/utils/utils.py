@@ -158,7 +158,7 @@ def extract_embeddings(net,dataloader,ms=[1],msp=1,print_freq=None,verbose = Fal
                 vecs[:, i] = extract_ss(net,input[0].cuda())
             
             else:
-                vecs[:, i] = extract_ms(net,input[0].cuda(), ms, msp)
+                vecs[:, i] = extract_ms(net,input[0].cuda(), ms, msp, model=model)
 
             if print_freq is not None:
                 if i%print_freq == 0:

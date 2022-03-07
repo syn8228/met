@@ -133,11 +133,13 @@ def extract_ss(net, input):
 
 
 
-def extract_ms(net, input, ms, msp):
+def extract_ms(net, input, ms, msp, model=None):
 	'''Credits to Filip Radenovic (https://github.com/filipradenovic/cnnimageretrieval-pytorch)
 	'''
-	
-	v = torch.zeros(net.meta['outputdim'])
+	if model=='vgg_fc7':
+		v = torch.zeros(4096)
+	else:
+		v = torch.zeros(net.meta['outputdim'])
 	
 	for s in ms:
 
