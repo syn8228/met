@@ -139,3 +139,16 @@ Navigate (```cd```) to ```[YOUR_MET_ROOT]/met```. ```[YOUR_MET_ROOT]``` is where
 Repository is under update. Feel free to give feedback, by sending an email to: ypsilnik@fel.cvut.cz
 
 ---
+
+# Load model from cnn_similarity_analysis repo
+```
+python3 met/code/examples/extract_descriptors.py \
+met/descriptors/ \
+--info_dir /cluster/shared_dataset/the_MET/ \
+--im_root /cluster/shared_dataset/the_MET/ \
+--net vgg_fc7 \
+--netpath yinan_cnn/cnn_similarity_analysis/experiments/the_MET/experiment_2022-01-24_14-25-41/models/Triplet_best.pth \
+--ms
+```
+'--net': name of the model from cnn_similarity_analysis
+'--netpath': path to checkpoint from cnn_similarity_analysis
